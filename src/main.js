@@ -4,7 +4,14 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { createLi } from "./js/render-functions";
 import { fetchData } from "./js/pixabay-api";
+import { inputValue } from "./js/pixabay-api";
+function getCardHeight() {
+    const card = document.querySelector('.gallery-item');
+    const cardRect = card.getBoundingClientRect();
+    return cardRect.height;
+}
 
+console.log(inputValue)
 const galleryUl = document.querySelector(".gallery");
 const submit = document.querySelector(".form");
 const loader = document.querySelector(".loader");
@@ -12,15 +19,8 @@ const BtMorePage = document.querySelector(".load-more");
 
 let currentPage = 1;
 let maxPages = Infinity;
-let inputValue = '';
-let cardHeight; 
-
-
-function getCardHeight() {
-    const card = document.querySelector('.gallery a');
-    const cardRect = card.getBoundingClientRect();
-    return cardRect.height;
-}
+let leght;
+let cardHeight;
 
 submit.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -28,9 +28,10 @@ submit.addEventListener("submit", async function (event) {
 
     galleryUl.innerHTML = "";
 
-    const input = document.querySelector('.text');
-    inputValue = input.value.trim();
-    if (inputValue === '') {
+    let er = inputValue();
+    leght = er;
+
+    if (er === '') {
         iziToast.show({
             message: 'Please, write your request ',
             color: 'red',
@@ -41,7 +42,7 @@ submit.addEventListener("submit", async function (event) {
     }
 
     try {
-        const data = await fetchData(inputValue, 1);
+        const data = await fetchData(1);
         currentPage = 1;
         galleryUl.innerHTML = '';
         galleryUl.insertAdjacentHTML("afterbegin", createLi(data.hits));
@@ -53,7 +54,16 @@ submit.addEventListener("submit", async function (event) {
         maxPages = Math.ceil(data.totalHits / 15)
         if (data.hits.length === 0) {
             BtMorePage.classList.add("is-hiden")
-        } else{BtMorePage.classList.remove("is-hiden")}
+        } else {
+            BtMorePage.classList.remove("is-hiden")
+        }
+        function getCardHeight() {
+    const card = document.querySelector('.gallery-item');
+    const cardRect = card.getBoundingClientRect();
+    return cardRect.height;
+}
+
+       
     } catch (error) {
         console.error('Error:', error);
         iziToast.show({
@@ -64,8 +74,6 @@ submit.addEventListener("submit", async function (event) {
     } finally {
         loader.classList.add("is-hiden");
     }
-    
-
 });
 
 BtMorePage.addEventListener("click", async event => {
@@ -108,5 +116,4 @@ BtMorePage.addEventListener("click", async event => {
     } finally {
         loader.classList.add("is-hiden");
     }
-
-})
+});

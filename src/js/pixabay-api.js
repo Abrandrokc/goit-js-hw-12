@@ -2,14 +2,19 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import axios from 'axios';
 
+let er;
 let images = []; 
-let currentPage = 1;
+let curentPage = 1;
 let totalPage;
-let inputValue; 
 
-async function fetchData( currentPage) {
+export const inputValue = () => {
     const input = document.querySelector('.text');
-    inputValue = input.value; 
+    er = input.value.trim();
+    input.value = "";
+    return er;
+}
+
+export async function fetchData(curentPage) {
     const link = `https://pixabay.com/api/`;
     const myApiKey = "42659935-3ef7103821fe0025c24926046";
 
@@ -17,11 +22,11 @@ async function fetchData( currentPage) {
         const response = await axios.get(link, {
             params: {
                 key: myApiKey,
-                q: inputValue,
+                q: er,
                 per_page: 15,
                 orientation: 'horizontal',
                 safesearch: true,
-                page: currentPage
+                page: curentPage
             }
         });
 
@@ -45,4 +50,3 @@ async function fetchData( currentPage) {
     }
 }
 
-export { fetchData, images, totalPage, currentPage }; 

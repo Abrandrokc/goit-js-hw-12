@@ -1,6 +1,7 @@
 
- function createLi(images) {
-    return  Array.from(images).map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
+
+function createLi(images) {
+    return Array.from(images).map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
      <li class="gallery-item">
             <a class="gallery-link" href="${largeImageURL}">
                 <img 
@@ -48,4 +49,5 @@
         </li>    
     `).join("");
 }
-export { createLi }
+
+export { createLi };
