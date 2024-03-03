@@ -50,7 +50,10 @@ submit.addEventListener("submit", async function (event) {
             captionDelay: 250
         });
         lightbox.refresh();
-        maxPages = Math.ceil(data.totalHits / 15);
+        maxPages = Math.ceil(data.totalHits / 15)
+        if (data.hits.length === 0) {
+            BtMorePage.classList.add("is-hiden")
+        } else{BtMorePage.classList.remove("is-hiden")}
     } catch (error) {
         console.error('Error:', error);
         iziToast.show({
@@ -61,7 +64,8 @@ submit.addEventListener("submit", async function (event) {
     } finally {
         loader.classList.add("is-hiden");
     }
-    BtMorePage.classList.remove("is-hiden");
+    
+
 });
 
 BtMorePage.addEventListener("click", async event => {
@@ -75,7 +79,7 @@ BtMorePage.addEventListener("click", async event => {
         return;
     }
 
-    loader.classList.remove("is-hide");
+    loader.classList.remove("is-hiden");
     try {
         currentPage++
         const data = await fetchData(currentPage);
@@ -102,7 +106,7 @@ BtMorePage.addEventListener("click", async event => {
         });
 
     } finally {
-        loader.classList.add("is-hide");
+        loader.classList.add("is-hiden");
     }
 
 })

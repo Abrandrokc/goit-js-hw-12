@@ -5,9 +5,11 @@ import axios from 'axios';
 let images = []; 
 let currentPage = 1;
 let totalPage;
-async function fetchData(currentPage) {
+let inputValue; 
+
+async function fetchData( currentPage) {
     const input = document.querySelector('.text');
-    const inputValue = input.value;
+    inputValue = input.value; 
     const link = `https://pixabay.com/api/`;
     const myApiKey = "42659935-3ef7103821fe0025c24926046";
 
@@ -34,7 +36,6 @@ async function fetchData(currentPage) {
         } else {
             images = data.hits; 
             totalPage = data.totalHits;
-           
         }
 
         return data;
@@ -44,4 +45,4 @@ async function fetchData(currentPage) {
     }
 }
 
-export { fetchData, images, totalPage, currentPage };
+export { fetchData, images, totalPage, currentPage }; 

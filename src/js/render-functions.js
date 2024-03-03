@@ -48,5 +48,4 @@
         </li>    
     `).join("");
 }
-
 export { createLi }
