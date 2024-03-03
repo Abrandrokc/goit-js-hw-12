@@ -75,7 +75,7 @@ BtMorePage.addEventListener("click", async event => {
         return;
     }
 
-    loader.classList.remove("is-hiden");
+    loader.classList.remove("is-hide");
     try {
         currentPage++
         const data = await fetchData(currentPage);
@@ -102,7 +102,7 @@ BtMorePage.addEventListener("click", async event => {
         });
 
     } finally {
-        loader.classList.add("is-hiden");
+        loader.classList.add("is-hide");
     }
 
 })
